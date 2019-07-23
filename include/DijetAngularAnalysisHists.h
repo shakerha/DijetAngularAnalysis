@@ -18,6 +18,9 @@ public:
 
     virtual void fill(const uhh2::Event & ev) override;
     virtual ~DijetAngularAnalysisHists();
+    
+	bool is_mc;     
+
 };
 
 }

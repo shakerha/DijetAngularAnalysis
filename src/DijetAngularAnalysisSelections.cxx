@@ -95,7 +95,7 @@ bool yboost_sel::passes(const Event & event){
 	const auto & rapi0 = 0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz()));
 	const auto & rapi1 = 0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
 	auto yboost_ = 0.5*((rapi0)+(rapi1)); 
-	if(yboost_ > yboost_min) return false;
+	if(abs(yboost_) > abs(yboost_min)) return false;
 	return true;
 }
 

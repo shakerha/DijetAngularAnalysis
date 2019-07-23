@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 <!--MC-->
-<!ENTITY MC_QCD_FLAT SYSTEM "/afs/desy.de/user/a/albrechs/xxl/af-cms/UHH2/10_2/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Flat2018_TMP.xml" >
+<!ENTITY MC_QCD_FLAT SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Flat2018_TMP.xml" >
 
 
 <!--Data-->
-<!ENTITY DATA_JetHT_2018A SYSTEM "/afs/desy.de/user/a/albrechs/xxl/af-cms/UHH2/10_2/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018A.xml" >
-<!ENTITY DATA_JetHT_2018B SYSTEM "/afs/desy.de/user/a/albrechs/xxl/af-cms/UHH2/10_2/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018B.xml" >
-<!ENTITY DATA_JetHT_2018C SYSTEM "/afs/desy.de/user/a/albrechs/xxl/af-cms/UHH2/10_2/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018C.xml" >
-<!ENTITY DATA_JetHT_2018D SYSTEM "/afs/desy.de/user/a/albrechs/xxl/af-cms/UHH2/10_2/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018D.xml" >
+<!ENTITY DATA_JetHT_2018A SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018A.xml" >
+<!ENTITY DATA_JetHT_2018B SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018B.xml" >
+<!ENTITY DATA_JetHT_2018C SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018C.xml" >
+<!ENTITY DATA_JetHT_2018D SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018D.xml" >
 
 ]>
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -77,7 +77,7 @@
             <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
             <Item Name="JetCollection" Value="jetsAk4Puppi" />
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
-            <Item Name="METName" Value="slimmedMETs" />
+            <Item Name="METName" Value="slimmedMETsPuppi" />
 
             <!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
 

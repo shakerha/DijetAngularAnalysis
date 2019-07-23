@@ -35,9 +35,9 @@ private:
     // declare the Selections to use. Use unique_ptr to ensure automatic call of delete in the destructor,
     // to avoid memory leaks.
     std::unique_ptr<Selection> njet_sel, dijet_sel, test_sel, h_rapidity_sel, h_pT_sel, h_chi_sel, h_yboost_sel;
-    
+                                                                                                                                                                   
     // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
-    std::unique_ptr<Hists> h_nocuts, h_njet, h_dijet,h_test, h_ele, h_MjjBin1p9To2p4, h_MjjBin2p4To3p0, h_MjjBin3p0To3p6, h_MjjBin3p6To4p2, h_MjjBin4p2To4p8, h_MjjBin4p8ToInf, h_rapidity, h_pT, h_chi, h_yboost;   
+    std::unique_ptr<Hists> h_nocuts, h_njet, h_dijet,h_test, h_ele, h_MjjBin1p9To2p4, h_MjjBin2p4To3p0, h_MjjBin3p0To3p6, h_MjjBin3p6To4p2, h_MjjBin4p2To4p8, h_MjjBin4p8ToInf, h_rapidity, h_pT, h_chi, h_yboost,h_pT_response_1, h_pT_response_2, h_Mjj, h_Mjj_2, h_pT_response_1_1, h_pT_response_1_2;   
     
     
 };
@@ -85,7 +85,7 @@ DijetAngularAnalysisModule::DijetAngularAnalysisModule(Context & ctx){
 	h_chi_sel.reset(new chi_sel());
 	h_yboost_sel.reset(new yboost_sel());
 	
-    // 3. Set up Hists classes:
+    // 3. Set up Hists classes1
     h_nocuts.reset(new DijetAngularAnalysisHists(ctx, "NoCuts"));
     h_njet.reset(new DijetAngularAnalysisHists(ctx, "Njet"));
     h_dijet.reset(new DijetAngularAnalysisHists(ctx, "Dijet"));
@@ -101,7 +101,8 @@ DijetAngularAnalysisModule::DijetAngularAnalysisModule(Context & ctx){
 	h_MjjBin3p6To4p2.reset(new DijetAngularAnalysisHists(ctx, "MjjBin3p6To4p2"));
 	h_MjjBin4p2To4p8.reset(new DijetAngularAnalysisHists(ctx, "MjjBin4p2To4p8"));
 	h_MjjBin4p8ToInf.reset(new DijetAngularAnalysisHists(ctx, "MjjBin4p8ToInf"));
-
+	
+	
 }
 
 

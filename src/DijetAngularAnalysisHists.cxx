@@ -33,8 +33,8 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   book<TH1F>("rapidity_2", "rapidity2", 100,-5,5);
   book<TH1F>("rapidity_12", "rapidity12", 100,-5,5);
   
-  book<TH1F>("pT1", "p_{T,1}", 100,0,1000);
-  book<TH1F>("pT2", "p_{T,2}", 100,0,1000);
+  book<TH1F>("pT1", "p_{T,1}", 100,200,5000);
+  book<TH1F>("pT2", "p_{T,2}", 100,200,5000);
   
   book<TH1F>("mj1j2", "M_{jj}", 100,0,6000);
   
@@ -46,8 +46,14 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   
   book<TH1F>("deltaphi", "#Delta #phi", 100,-2*pi,2*pi);
   
-  
+  book<TH1F>("pT_response_1", "pT_response_1", 10,-1,5);
+  book<TH1F>("pT_response_2", "pT_response_2", 10,-1,5);
+  book<TH1F>("Mjj", "Mjj", 10,-1,5);
+  book<TH1F>("Mjj_2", "Mjj_2", 10,-1,5);
+  book<TH1F>("pT_response_1_1", "pT_response_1_1", 10,-1,5);
+  book<TH1F>("pT_response_1_2", "pT_response_2_2", 10,-1,5);
 
+  
   //~ book<TH2D>("EMcharged_vs_eta_jet1","EMcharged vs #eta; #eta; EMcharged",100,-6,6,100,0.0,1.0);   
   //~ book<TH2D>("EMneutral_vs_eta_jet1","EMneutral vs #eta; #eta; EMneutral",100,-6,6,100,0.0,1.0);   
   //~ book<TH2D>("HADcharged_vs_eta_jet1","HADcharged vs #eta; #eta; HADcharged",100,-6,6,100,0.0,1.0);   
@@ -66,8 +72,12 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
 
   // primary vertices
   book<TH1F>("N_pv", "N^{PV}", 100, 0, 100);
+  
+  is_mc = (ctx.get("dataset_type")=="MC");
+std::cout << "A" << std::endl;
 }
-
+  
+  
 
 void DijetAngularAnalysisHists::fill(const Event & event){
   // fill the histograms. Please note the comments in the header file:
@@ -82,7 +92,6 @@ void DijetAngularAnalysisHists::fill(const Event & event){
   int Njets = jets->size();
   hist("N_jets")->Fill(Njets, weight);
   if(!event.isRealData)  hist("N_PU")->Fill(event.genInfo->pileup_TrueNumInteractions(), weight);
-
   if(Njets>=1){
     hist("eta_jet1")->Fill(jets->at(0).eta(), weight);
     hist("pt_jet1")->Fill(jets->at(0).pt(), weight);
@@ -93,7 +102,8 @@ void DijetAngularAnalysisHists::fill(const Event & event){
     hist("rapidity_1")->Fill(0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz())), weight);
     hist("pT1")->Fill(event.jets->at(0).pt(), weight);
     
-    
+      
+
     
     //~ ((TH2D*)hist("EMcharged_vs_eta_jet1"))->Fill(jets->at(0).eta(),jets->at(0).chargedEmEnergyFraction(), weight);
     //~ ((TH2D*)hist("EMneutral_vs_eta_jet1"))->Fill(jets->at(0).eta(),jets->at(0).neutralEmEnergyFraction(), weight);
@@ -106,6 +116,63 @@ void DijetAngularAnalysisHists::fill(const Event & event){
       //~ ((TH2D*)hist("HADneutral_vs_PU_jet1"))->Fill(event.genInfo->pileup_TrueNumInteractions(),jets->at(0).neutralHadronEnergyFraction(), weight);
     //~ }
   }
+
+    //is_mc = ctx.get("dataset_type") == "MC";
+    
+    //~ float DR = 10^6;
+
+ 
+if( is_mc ){
+	int a=-1;
+	if(event.genjets->size() > 0  && event.jets->size() >0){	
+		auto kleinsterAbstand = 100000; 
+	   auto jet1 = event.jets->at(0);
+	 auto gjet1 = event.genjets->at(0);
+
+		for(unsigned  int i=0; i < event.genjets->size(); i++){
+			if( deltaR( jet1, event.genjets->at(i)) < kleinsterAbstand){
+			kleinsterAbstand = deltaR( jet1, event.genjets ->at(i));	
+			a = i;
+			}
+
+	
+		}
+		hist("pT_response_1") -> Fill( (jet1.pt()-event.genjets->at(a).pt())/event.genjets->at(a).pt(), weight);
+	hist("pT_response_1_1") -> Fill((jet1.pt()- gjet1.pt())/gjet1.pt(), weight);
+
+	}
+	
+
+if(event.genjets->size() > 1 && event.jets->size() >1){
+	
+	auto jet2 = event.jets->at(1);
+	std::cout << "B" << std::endl;
+	auto jet1 = event.jets->at(0);
+	auto gjet2 = event.genjets->at(1);
+	auto gjet1 = event.genjets->at(0);
+	auto zweitkleinsterAbstand = 100000;
+	int b=-1;
+		
+	for( unsigned int i=0; i < event.genjets->size(); i++){
+		if( deltaR( jet1, event.genjets->at(i)) < zweitkleinsterAbstand){
+			zweitkleinsterAbstand = deltaR( jet2, event.genjets ->at(i));	
+			b = i;
+		}
+		
+			}
+		hist("pT_response_2") -> Fill( (jet2.pt()-event.genjets->at(b).pt())/event.genjets->at(b).pt(), weight);
+		
+	
+		hist("Mjj") -> Fill( (jet1.v4() + jet2.v4()).M()- (event.genjets->at(a).v4()+event.genjets->at(b).v4()).M()/(event.genjets->at(a).v4()+event.genjets->at(b).v4()).M(), weight);
+		
+		//hist("Mjj") -> Fill( (jet1.v4().M()- event.genjets->at(a).v4().M())/event.genjets->at(a).v4().M(), weight);
+		hist("pT_response_1_2") -> Fill((jet2.pt()- gjet2.pt())/gjet2.pt(), weight);
+	hist("Mjj_2") -> Fill((jet1.v4() + jet2.v4()).M()- ((gjet1.v4()+gjet2.v4()).M())/((gjet1.v4()+gjet2.v4()).M()), weight);
+	}
+
+	
+  }
+
   
     if(Njets>=2){
 	hist("rapidity_2")->Fill(0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz())), weight);
