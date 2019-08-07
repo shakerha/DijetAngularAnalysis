@@ -18,7 +18,7 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   book<TH1F>("N_jets", "N_{jets}", 20, 0, 20);  
   book<TH1F>("N_PU", "N_{PU}", 100, 0, 100);  
   book<TH1F>("eta_jet1", "#eta^{jet 1}", 40, -2.5, 2.5);
-  book<TH1F>("pt_jet1", "p_{T}^{jet 1}", 100, 10, 500);
+  book<TH1F>("pt_jet1", "p_{T}^{jet 1}", 100, 10, 5000);
   book<TH1F>("eta_jet2", "#eta^{jet 2}", 40, -2.5, 2.5);
   book<TH1F>("eta_jet3", "#eta^{jet 3}", 40, -2.5, 2.5);
   book<TH1F>("eta_jet4", "#eta^{jet 4}", 40, -2.5, 2.5);
@@ -46,12 +46,12 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   
   book<TH1F>("deltaphi", "#Delta #phi", 100,-2*pi,2*pi);
   
-  book<TH1F>("pT_response_1", "pT_response_1", 10,-1,5);
-  book<TH1F>("pT_response_2", "pT_response_2", 10,-1,5);
-  book<TH1F>("Mjj", "Mjj", 10,-1,5);
-  book<TH1F>("Mjj_2", "Mjj_2", 10,-1,5);
-  book<TH1F>("pT_response_1_1", "pT_response_1_1", 10,-1,5);
-  book<TH1F>("pT_response_1_2", "pT_response_2_2", 10,-1,5);
+  book<TH1F>("pT_response_1", "pT_response_1", 100,-2,2);
+  book<TH1F>("pT_response_2", "pT_response_2", 100,-2,2);
+  book<TH1F>("Mjj_Response", "Mjj_Response", 100,-2,3);
+  book<TH1F>("Mjj_2_Response", "Mjj_2_Response", 100,-2,3);
+  book<TH1F>("pT_response_1_1", "pT_response_1_1", 100,-2,2);
+  book<TH1F>("pT_response_1_2", "pT_response_2_2", 100,-2,2);
 
   
   //~ book<TH2D>("EMcharged_vs_eta_jet1","EMcharged vs #eta; #eta; EMcharged",100,-6,6,100,0.0,1.0);   
@@ -74,7 +74,7 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   book<TH1F>("N_pv", "N^{PV}", 100, 0, 100);
   
   is_mc = (ctx.get("dataset_type")=="MC");
-std::cout << "A" << std::endl;
+//std::cout << "A" << std::endl;
 }
   
   
@@ -101,7 +101,9 @@ void DijetAngularAnalysisHists::fill(const Event & event){
     hist("HADneutral_jet1")->Fill(jets->at(0).neutralHadronEnergyFraction(), weight);
     hist("rapidity_1")->Fill(0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz())), weight);
     hist("pT1")->Fill(event.jets->at(0).pt(), weight);
-    
+    //if (event.jets->at(0).pt() < 500) {
+		//cout << " *** low jet: " << event.jets->at(0).pt() << endl;
+	//}
       
 
     
@@ -146,7 +148,7 @@ if( is_mc ){
 if(event.genjets->size() > 1 && event.jets->size() >1){
 	
 	auto jet2 = event.jets->at(1);
-	std::cout << "B" << std::endl;
+	//std::cout << "B" << std::endl;
 	auto jet1 = event.jets->at(0);
 	auto gjet2 = event.genjets->at(1);
 	auto gjet1 = event.genjets->at(0);
@@ -154,7 +156,7 @@ if(event.genjets->size() > 1 && event.jets->size() >1){
 	int b=-1;
 		
 	for( unsigned int i=0; i < event.genjets->size(); i++){
-		if( deltaR( jet1, event.genjets->at(i)) < zweitkleinsterAbstand){
+		if( deltaR( jet2, event.genjets->at(i)) < zweitkleinsterAbstand){
 			zweitkleinsterAbstand = deltaR( jet2, event.genjets ->at(i));	
 			b = i;
 		}
@@ -162,12 +164,14 @@ if(event.genjets->size() > 1 && event.jets->size() >1){
 			}
 		hist("pT_response_2") -> Fill( (jet2.pt()-event.genjets->at(b).pt())/event.genjets->at(b).pt(), weight);
 		
-	
-		hist("Mjj") -> Fill( (jet1.v4() + jet2.v4()).M()- (event.genjets->at(a).v4()+event.genjets->at(b).v4()).M()/(event.genjets->at(a).v4()+event.genjets->at(b).v4()).M(), weight);
+		auto genjet = event.genjets->at(a).v4()+event.genjets->at(b).v4();
+		auto recojet = jet1.v4() + jet2.v4();
+		
+		hist("Mjj_Response") -> Fill( ((recojet).M()- (genjet).M())/(genjet).M(), weight);					//HIER IST IRGENDWAS FALSCH!!!!!!!!!!!!!!!!!!!
 		
 		//hist("Mjj") -> Fill( (jet1.v4().M()- event.genjets->at(a).v4().M())/event.genjets->at(a).v4().M(), weight);
 		hist("pT_response_1_2") -> Fill((jet2.pt()- gjet2.pt())/gjet2.pt(), weight);
-	hist("Mjj_2") -> Fill((jet1.v4() + jet2.v4()).M()- ((gjet1.v4()+gjet2.v4()).M())/((gjet1.v4()+gjet2.v4()).M()), weight);
+	hist("Mjj_2_Response") -> Fill(((jet1.v4() + jet2.v4()).M()- ((gjet1.v4()+gjet2.v4()).M()))/((gjet1.v4()+gjet2.v4()).M()), weight);
 	}
 
 	
