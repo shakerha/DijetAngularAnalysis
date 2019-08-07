@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
+<!--MC-->
+<!ENTITY MC_QCD_HT1000to1500 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT1000to1500.xml">
+<!ENTITY MC_QCD_HT100to200 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT100to200.xml">
+<!ENTITY MC_QCD_HT1500to2000 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT1500to2000.xml">
+<!ENTITY MC_QCD_HT2000toInf SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT2000toInf.xml">
+<!ENTITY MC_QCD_HT200to300 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT200to300.xml">
+<!ENTITY MC_QCD_HT300to500 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT300to500.xml">
+<!ENTITY MC_QCD_HT500to700 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT500to700.xml">
+<!ENTITY MC_QCD_HT50to100 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT50to100.xml">
+<!ENTITY MC_QCD_HT700to1000 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/MC_QCD_HT700to1000.xml">
+
+
+<!--
+
+
+
+/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3
+-->
+
+<!--Data-->
+<!ENTITY DATA_JetHTRun2016B SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016B.xml">
+<!ENTITY DATA_JetHTRun2016C SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016C.xml">
+<!ENTITY DATA_JetHTRun2016D SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016D.xml">
+<!ENTITY DATA_JetHTRun2016E SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016E.xml">
+<!ENTITY DATA_JetHTRun2016F SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016F.xml">
+<!ENTITY DATA_JetHTRun2016G SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016G.xml">
+<!ENTITY DATA_JetHTRun2016H SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3/DATA_JetHTRun2016H.xml">
+
+]>
+<!--
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="30" />
+<ConfigSGE RAM ="10" DISK ="10" Mail="haron.shaker@desy.de" Notification="as" Workdir="workdir_2016"/>
+-->
+<!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+    <Library Name="libSUHH2DijetAngularAnalysis"/>
+    <Package Name="SUHH2DijetAngularAnalysis.par" />
+    
+
+
+
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/shakerha/UHH2Output/" PostFix="" TargetLumi="35920" >
+   <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
+
+        <!-- Verion attribute must have year in it, same as used in ntuple config, e.g. 2018, 2016v3, etc -->
+       <!-- <InputData Lumi="1" NEventsMax="10000" Type="Data" Version="Example_2018" Cacheable="False">
+            <In FileName="/pnfs/desy.de/cms/tier2/store/user/akaravdi/RunII_102X_v1_TEST/JetHT2018/Run2018A_default/DATA_JetHT_Run2018A_986_Ntuple.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />-->
+            <!-- uncomment to write tree of selected events, i.e. of those events for which the AnalysisModule::process method  returns true
+            If no OutputTree is given, no events will be written.
+            You must use "AnalysisTree" as Name otherwise it will be empty. -->
+            <!-- <OutputTree Name="AnalysisTree" /> -->
+        <!--</InputData>-->
+        
+			<!--TEST-->
+
+<!--
+				 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="JetHTtest_2016v3" Cacheable="False"> 
+<In FileName="/pnfs/desy.de/cms/tier2//store/user/salbrech/RunII_102X_v1/2016v3//JetHT/crab_JetHT_2016C_v1/190510_081919/0000/Ntuple_1.root" Lumi="0.0"/>
+<In FileName="/pnfs/desy.de/cms/tier2//store/user/salbrech/RunII_102X_v1/2016v3//JetHT/crab_JetHT_2016C_v1/190510_081919/0000/Ntuple_10.root" Lumi="0.0"/>
+<In FileName="/pnfs/desy.de/cms/tier2//store/user/salbrech/RunII_102X_v1/2016v3//JetHT/crab_JetHT_2016C_v1/190510_081919/0000/Ntuple_100.root" Lumi="0.0"/>
+<In FileName="/pnfs/desy.de/cms/tier2//store/user/salbrech/RunII_102X_v1/2016v3//JetHT/crab_JetHT_2016C_v1/190510_081919/0000/Ntuple_2.root" Lumi="0.0"/>
+<In FileName="/pnfs/desy.de/cms/tier2//store/user/salbrech/RunII_102X_v1/2016v3//JetHT/crab_JetHT_2016C_v1/190510_081919/0000/Ntuple_20.root" Lumi="0.0"/>
+<In FileName="/pnfs/desy.de/cms/tier2//store/user/salbrech/RunII_102X_v1/2016v3//JetHT/crab_JetHT_2016C_v1/190510_081919/0000/Ntuple_200.root" Lumi="0.0"/>
+
+				 	<InputTree Name="AnalysisTree"/> 
+				 </InputData> 
+
+
+-->
+
+<!--
+				 <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="MCTEST_2016v3" Cacheable="False"> 
+				 	<In FileName="/pnfs/desy.de/cms/tier2/store/user/raggleto/RunII_102X_v1/2016v3/QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/crab_QCD_HT1000to1500_23_Apr_19/190423_092715/0000/Ntuple_1.root" Lumi="0.0"/> 
+				 	<InputTree Name="AnalysisTree"/> 
+				 </InputData> 
+-->
+
+<!--
+				<InputData Lumi="1207.0000" NEventsMax="-1" Type="MC" Version="MC_QCD_HT1000to1500_2016v3" Cacheable="False">
+					&MC_QCD_HT1000to1500;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+								<InputData Lumi="27990000.0000" NEventsMax="-1" Type="MC" Version="MC_QCD_HT100to200_2016v3" Cacheable="False">
+					&MC_QCD_HT100to200;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="98743.59466" NEventsMax="-1" Type="MC" Version="MC_QCD_HT1500to2000_2016v3" Cacheable="False">
+					&MC_QCD_HT1500to2000;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="235651.7036" NEventsMax="-1" Type="MC" Version="MC_QCD_HT2000toInf_2016v3" Cacheable="False">
+					&MC_QCD_HT2000toInf;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="33.12492699" NEventsMax="-1" Type="MC" Version="MC_QCD_HT200to300_2016v3" Cacheable="False">
+					&MC_QCD_HT200to300;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="152.707843" NEventsMax="-1" Type="MC" Version="MC_QCD_HT300to500_2016v3" Cacheable="False">
+					&MC_QCD_HT300to500;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="1648.17919" NEventsMax="-1" Type="MC" Version="MC_QCD_HT500to700_2016v3" Cacheable="False">
+					&MC_QCD_HT500to700;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+
+				<InputData Lumi="0.01695242903" NEventsMax="-1" Type="MC" Version="MC_QCD_HT50to100_2016v3" Cacheable="False">
+					&MC_QCD_HT50to100;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+				
+				<InputData Lumi="5378.647343" NEventsMax="-1" Type="MC" Version="MC_QCD_HT700to1000_2016v3" Cacheable="False">
+					&MC_QCD_HT700to1000;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+-->
+
+
+
+
+
+
+
+
+
+
+		 <InputData Version="DATA_JetHT_2016v3B" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016B;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 		 <InputData Version="DATA_JetHT_2016v3C" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016C;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 		 <InputData Version="DATA_JetHT_2016v3D" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016D;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 		 <InputData Version="DATA_JetHT_2016v3E" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016E;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 		 <InputData Version="DATA_JetHT_2016v3F" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016F;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 		 <InputData Version="DATA_JetHT_2016v3G" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016G;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 		 <InputData Version="DATA_JetHT_2016v3H" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2016H;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+
+<!--
+
+&DATA_JetHTRun2016C;
+&DATA_JetHTRun2016D;
+&DATA_JetHTRun2016E;
+&DATA_JetHTRun2016F;
+&DATA_JetHTRun2016G;
+&DATA_JetHTRun2016H;
+-->
+
+
+
+
+<!--
+			Echter Lauf
+-->
+<!--		 <InputData Version="DATA_JetHT_2018A" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 	&DATA_JetHT_2018A; 
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+
+		<InputData Version="DATA_JetHT_2018B" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False">
+			&DATA_JetHT_2018B;
+			<InputTree Name="AnalysisTree"/>
+		</InputData>
+
+		 <InputData Version="DATA_JetHT_2018C" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 	&DATA_JetHT_2018C; 
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+
+		<InputData Version="DATA_JetHT_2018D" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False">
+			&DATA_JetHT_2018D;
+			<InputTree Name="AnalysisTree"/>
+		</InputData>
+
+		<InputData Version="MC_QCD_FLAT_2018" Lumi="1.5130995" Type="MC" NEventsMax="-1" Cacheable="False">
+			&MC_QCD_FLAT;
+			<InputTree Name="AnalysisTree"/>
+		</InputData>
+-->
+
+
+        <UserConfig>
+            <!-- define which collections to read from the input. Only specify what you need to save I/O time -->
+            <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
+            <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+            <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
+            <Item Name="JetCollection" Value="jetsAk4Puppi" />
+            <Item Name="GenJetCollection" Value="slimmedGenJets" />
+            <Item Name="METName" Value="slimmedMETsPuppi" />
+
+            <!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
+
+                 PrimaryVertexCollection
+                 ElectronCollection
+                 MuonCollection
+                 TauCollection
+                 PhotonCollection
+                 JetCollection
+                 TopJetCollection
+                 METName
+                 PFParticleCollection
+
+                 GenInfoName
+                 GenJetCollection
+                 GenTopJetCollection
+                 GenParticleCollection
+
+                 Note that the last four are only read in for MC (InputData Type="MC"), so it is save to specify
+                 them for real data, although those branches do not exist.
+
+                 As 'Value', always use the branch name (if in doubt, open the input file in ROOT).
+
+                 By default, triggers are read. To explicitly disable reading triggers, use:
+                 <Item Name="readTrigger" Value="false" />
+            -->
+
+            <!-- the class name of the AnalysisModule subclasses to run: -->
+            <Item Name="AnalysisModule" Value="DijetAngularAnalysisModule" />
+
+            <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
+                 MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+                 event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+            <Item Name="use_sframe_weight" Value="false" />
+
+            <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
+            <Item Name="pileup_directory" Value="common/data/2016/MyMCPileupHistogram.root" />
+            <Item Name="pileup_directory_data" Value="common/data/2016/MyDataPileupHistogram.root" />
+			<Item Name="lumi_file" Value="common/data/2016/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root" />
+            <!-- Some test configuration; see DijetAngularAnalysisModule.cxx for how to access it: -->
+            <Item Name="TestKey" Value="TestKeyValue" />
+        </UserConfig>
+    </Cycle>
+</JobConfiguration>

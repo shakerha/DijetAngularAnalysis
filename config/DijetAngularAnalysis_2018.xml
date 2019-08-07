@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
+<!--MC-->
+<!ENTITY MC_QCD_Flat2018 SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Flat2018_TMP.xml">
+
+
+<!--
+
+
+
+/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3
+-->
+
+<!--Data-->
+<!ENTITY DATA_JetHTRun2018A SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018A.xml">
+<!ENTITY DATA_JetHTRun2018B SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018B.xml">
+<!ENTITY DATA_JetHTRun2018C SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018C.xml">
+<!ENTITY DATA_JetHTRun2018D SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018D.xml">
+
+]>
+<!--
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="30" />
+<ConfigSGE RAM ="10" DISK ="10" Mail="haron.shaker@desy.de" Notification="as" Workdir="workdir_2016"/>
+-->
+<!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+    <Library Name="libSUHH2DijetAngularAnalysis"/>
+    <Package Name="SUHH2DijetAngularAnalysis.par" />
+    
+
+
+
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/shakerha/UHH2Output/" PostFix="" TargetLumi="35920" >
+   <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
+
+        <!-- Verion attribute must have year in it, same as used in ntuple config, e.g. 2018, 2016v3, etc -->
+       <!-- <InputData Lumi="1" NEventsMax="10000" Type="Data" Version="Example_2018" Cacheable="False">
+            <In FileName="/pnfs/desy.de/cms/tier2/store/user/akaravdi/RunII_102X_v1_TEST/JetHT2018/Run2018A_default/DATA_JetHT_Run2018A_986_Ntuple.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />-->
+            <!-- uncomment to write tree of selected events, i.e. of those events for which the AnalysisModule::process method  returns true
+            If no OutputTree is given, no events will be written.
+            You must use "AnalysisTree" as Name otherwise it will be empty. -->
+            <!-- <OutputTree Name="AnalysisTree" /> -->
+        <!--</InputData>-->
+        
+			<!--TEST-->
+<!--
+				 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="JetHT_2018B" Cacheable="False"> 
+				 	<In FileName="/pnfs/desy.de/cms/tier2/store/user/akaravdi/RunII_102X_v1_TEST/JetHT2018/Run2018B_default/DATA_JetHT_Run2018B_99_Ntuple.root" Lumi="0.0"/> 
+				 	<InputTree Name="AnalysisTree"/> 
+				 </InputData> 
+-->
+
+				
+				
+		 <InputData Lumi="1.5130995" NEventsMax="-1" Type="MC" Version="MC_QCD_Flat2018" Cacheable="False">
+			&MC_QCD_Flat2018;
+			<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+						
+
+
+		 <InputData Version="DATA_JetHTRun2018A" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2018A;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 <InputData Version="DATA_JetHT_2018B" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2018B;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 <InputData Version="DATA_JetHT_2018C" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2018C;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+		 <InputData Version="DATA_JetHT_2018D" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+			&DATA_JetHTRun2018D;
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+		 
+
+
+
+
+
+<!--
+			Echter Lauf
+-->
+<!--		 <InputData Version="DATA_JetHT_2018A" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 	&DATA_JetHT_2018A; 
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+
+		<InputData Version="DATA_JetHT_2018B" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False">
+			&DATA_JetHT_2018B;
+			<InputTree Name="AnalysisTree"/>
+		</InputData>
+
+		 <InputData Version="DATA_JetHT_2018C" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 	&DATA_JetHT_2018C; 
+		 	<InputTree Name="AnalysisTree"/> 
+		 </InputData> 
+
+		<InputData Version="DATA_JetHT_2018D" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False">
+			&DATA_JetHT_2018D;
+			<InputTree Name="AnalysisTree"/>
+		</InputData>
+
+		<InputData Version="MC_QCD_FLAT_2018" Lumi="1.5130995" Type="MC" NEventsMax="-1" Cacheable="False">
+			&MC_QCD_FLAT;
+			<InputTree Name="AnalysisTree"/>
+		</InputData>
+-->
+
+
+        <UserConfig>
+            <!-- define which collections to read from the input. Only specify what you need to save I/O time -->
+            <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
+            <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+            <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
+            <Item Name="JetCollection" Value="jetsAk4Puppi" />
+            <Item Name="GenJetCollection" Value="slimmedGenJets" />
+            <Item Name="METName" Value="slimmedMETsPuppi" />
+
+            <!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
+
+                 PrimaryVertexCollection
+                 ElectronCollection
+                 MuonCollection
+                 TauCollection
+                 PhotonCollection
+                 JetCollection
+                 TopJetCollection
+                 METName
+                 PFParticleCollection
+
+                 GenInfoName
+                 GenJetCollection
+                 GenTopJetCollection
+                 GenParticleCollection
+
+                 Note that the last four are only read in for MC (InputData Type="MC"), so it is save to specify
+                 them for real data, although those branches do not exist.
+
+                 As 'Value', always use the branch name (if in doubt, open the input file in ROOT).
+
+                 By default, triggers are read. To explicitly disable reading triggers, use:
+                 <Item Name="readTrigger" Value="false" />
+            -->
+
+            <!-- the class name of the AnalysisModule subclasses to run: -->
+            <Item Name="AnalysisModule" Value="DijetAngularAnalysisModule" />
+
+            <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
+                 MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+                 event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+            <Item Name="use_sframe_weight" Value="false" />
+
+            <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
+            <Item Name="pileup_directory" Value="common/data/2016/MyMCPileupHistogram.root" />
+            <Item Name="pileup_directory_data" Value="common/data/2016/MyDataPileupHistogram2016.root" />
+			<Item Name="lumi_file" Value="common/data/2016/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root" />
+            <!-- Some test configuration; see DijetAngularAnalysisModule.cxx for how to access it: -->
+            <Item Name="TestKey" Value="TestKeyValue" />
+        </UserConfig>
+    </Cycle>
+</JobConfiguration>

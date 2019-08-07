@@ -1,0 +1,37 @@
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+#0  0x0000003919cac89e in waitpid () from /lib64/libc.so.6
+#1  0x0000003919c3e4e9 in do_system () from /lib64/libc.so.6
+#2  0x00002b6eed14d911 in TUnixSystem::StackTrace() () from /cvmfs/cms.cern.ch/slc6_amd64_gcc700/cms/cmssw/CMSSW_10_2_10/external/slc6_amd64_gcc700/lib/libCore.so
+#3  0x00002b6eed14ff5c in TUnixSystem::DispatchSignals(ESignals) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc700/cms/cmssw/CMSSW_10_2_10/external/slc6_amd64_gcc700/lib/libCore.so
+#4  <signal handler called>
+#5  uhh2::AnalysisModuleRunner::EndMasterInputData (this=0x39a0120) at src/AnalysisModuleRunner.cxx:791
+#6  0x00002b6eecdfdbc1 in SCycleBaseExec::Terminate() () from /afs/desy.de/user/s/shakerha/bachelor/102/SFrame/lib/libSFrameCore.so
+#7  0x00002b6eedfaa9a3 in TTreePlayer::Process(TSelector*, char const*, long long, long long) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc700/cms/cmssw/CMSSW_10_2_10/external/slc6_amd64_gcc700/lib/libTreePlayer.so
+#8  0x00002b6eecdef07f in SCycleController::ExecuteNextCycle() () from /afs/desy.de/user/s/shakerha/bachelor/102/SFrame/lib/libSFrameCore.so
+#9  0x00002b6eecde870d in SCycleController::ExecuteAllCycles() () from /afs/desy.de/user/s/shakerha/bachelor/102/SFrame/lib/libSFrameCore.so
+#10 0x000000000040253f in main ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+You may get help by asking at the ROOT forum http://root.cern.ch/forum.
+Only if you are really convinced it is a bug in ROOT then please submit a
+report at http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#5  uhh2::AnalysisModuleRunner::EndMasterInputData (this=0x39a0120) at src/AnalysisModuleRunner.cxx:791
+#6  0x00002b6eecdfdbc1 in SCycleBaseExec::Terminate() () from /afs/desy.de/user/s/shakerha/bachelor/102/SFrame/lib/libSFrameCore.so
+#7  0x00002b6eedfaa9a3 in TTreePlayer::Process(TSelector*, char const*, long long, long long) () from /cvmfs/cms.cern.ch/slc6_amd64_gcc700/cms/cmssw/CMSSW_10_2_10/external/slc6_amd64_gcc700/lib/libTreePlayer.so
+#8  0x00002b6eecdef07f in SCycleController::ExecuteNextCycle() () from /afs/desy.de/user/s/shakerha/bachelor/102/SFrame/lib/libSFrameCore.so
+#9  0x00002b6eecde870d in SCycleController::ExecuteAllCycles() () from /afs/desy.de/user/s/shakerha/bachelor/102/SFrame/lib/libSFrameCore.so
+#10 0x000000000040253f in main ()
+===========================================================
+
+
