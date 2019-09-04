@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 <!--MC-->
+<!--
 <!ENTITY MC_QCD_Flat2018 SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Flat2018_TMP.xml">
+-->
+
+
 
 
 <!--
-
-
-
-/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2016v3
+MC2
 -->
 
+
+
+<!ENTITY MC_QCD_Pt_170to300 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_170to300_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_300to470 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_300to470_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_470to600 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_470to600_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_600to800 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_600to800_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_800to1000 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_800to1000_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_1400to1800 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_1800to2400 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_2400to3200 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_3200toInf SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8.xml">
+
+
+
+
+
+<!-- /nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018 -->
+
+
 <!--Data-->
-<!ENTITY DATA_JetHTRun2018A SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018A.xml">
-<!ENTITY DATA_JetHTRun2018B SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018B.xml">
-<!ENTITY DATA_JetHTRun2018C SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018C.xml">
-<!ENTITY DATA_JetHTRun2018D SYSTEM "/afs/desy.de/user/s/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018D.xml">
+<!ENTITY DATA_JetHTRun2018A SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018A.xml">
+<!ENTITY DATA_JetHTRun2018B SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018B.xml">
+<!ENTITY DATA_JetHTRun2018C SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018C.xml">
+<!ENTITY DATA_JetHTRun2018D SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/DATA_JetHT2018D.xml">
 
 ]>
 <!--
 <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="30" />
-<ConfigSGE RAM ="10" DISK ="10" Mail="haron.shaker@desy.de" Notification="as" Workdir="workdir_2016"/>
+<ConfigSGE RAM ="10" DISK ="10" Mail="haron.shaker@desy.de" Notification="as" Workdir="workdir_2018"/>
 -->
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
 <JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
@@ -30,7 +50,7 @@
 
 
 
-   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/shakerha/UHH2Output/" PostFix="" TargetLumi="35920" >
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/shakerha/UHH2Output/" PostFix="" TargetLumi="59740" >
    <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
         <!-- Verion attribute must have year in it, same as used in ntuple config, e.g. 2018, 2016v3, etc -->
@@ -53,11 +73,66 @@
 
 				
 				
+<!--
 		 <InputData Lumi="1.5130995" NEventsMax="-1" Type="MC" Version="MC_QCD_Flat2018" Cacheable="False">
 			&MC_QCD_Flat2018;
 			<InputTree Name="AnalysisTree"/>
 				</InputData>
+-->
 				
+								<InputData Lumi="286.4995178" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_15to30_2018" Cacheable="False">
+					&MC_QCD_Pt_170to300;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+				<InputData Lumi="6117.233294" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_300to470_2018" Cacheable="False">
+					&MC_QCD_Pt_300to470;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="76193.18891" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_470to600_2018" Cacheable="False">
+					&MC_QCD_Pt_470to600;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="383073.4824" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_600to800_2018" Cacheable="False">
+					&MC_QCD_Pt_600to800;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="1431214.313" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_800to1000_2018" Cacheable="False">
+					&MC_QCD_Pt_800to1000;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="2452054.795" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_1000to1400_2018" Cacheable="False">
+					&MC_QCD_Pt_1000to1400;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+				<InputData Lumi="10679821.18" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_1400to1800_2018" Cacheable="False">
+					&MC_QCD_Pt_1400to1800;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+
+
+				<InputData Lumi="46049283.67" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_1800to2400_2018" Cacheable="False">
+					&MC_QCD_Pt_1800to2400;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+				
+				<InputData Lumi="456783056.7" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_2400to3200_2018" Cacheable="False">
+					&MC_QCD_Pt_2400to3200;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+					<InputData Lumi="6836659276" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_3200toInf_2018" Cacheable="False">
+					&MC_QCD_Pt_3200toInf;
+					<InputTree Name="AnalysisTree"/>
+				</InputData>
+				
+					
 						
 
 
@@ -113,7 +188,7 @@
 			&MC_QCD_FLAT;
 			<InputTree Name="AnalysisTree"/>
 		</InputData>
--->
+
 
 
         <UserConfig>
@@ -160,9 +235,9 @@
             <Item Name="use_sframe_weight" Value="false" />
 
             <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
-            <Item Name="pileup_directory" Value="common/data/2016/MyMCPileupHistogram.root" />
-            <Item Name="pileup_directory_data" Value="common/data/2016/MyDataPileupHistogram2016.root" />
-			<Item Name="lumi_file" Value="common/data/2016/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root" />
+            <Item Name="pileup_directory" Value="common/data/2018/MyMCPileupHistogram.root" />
+            <Item Name="pileup_directory_data" Value="common/data/2018/MyDataPileupHistogram2018.root" />
+			<Item Name="lumi_file" Value="Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.root" />
             <!-- Some test configuration; see DijetAngularAnalysisModule.cxx for how to access it: -->
             <Item Name="TestKey" Value="TestKeyValue" />
         </UserConfig>

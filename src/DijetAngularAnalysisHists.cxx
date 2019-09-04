@@ -18,7 +18,6 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   book<TH1F>("N_jets", "N_{jets}", 20, 0, 20);  
   book<TH1F>("N_PU", "N_{PU}", 100, 0, 100);  
   book<TH1F>("eta_jet1", "#eta^{jet 1}", 40, -2.5, 2.5);
-  book<TH1F>("pt_jet1", "p_{T}^{jet 1}", 100, 10, 5000);
   book<TH1F>("eta_jet2", "#eta^{jet 2}", 40, -2.5, 2.5);
   book<TH1F>("eta_jet3", "#eta^{jet 3}", 40, -2.5, 2.5);
   book<TH1F>("eta_jet4", "#eta^{jet 4}", 40, -2.5, 2.5);
@@ -46,12 +45,32 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   
   book<TH1F>("deltaphi", "#Delta #phi", 100,-2*pi,2*pi);
   
-  book<TH1F>("pT_response_1", "pT_response_1", 100,-2,2);
-  book<TH1F>("pT_response_2", "pT_response_2", 100,-2,2);
-  book<TH1F>("Mjj_Response", "Mjj_Response", 100,-2,3);
-  book<TH1F>("Mjj_2_Response", "Mjj_2_Response", 100,-2,3);
-  book<TH1F>("pT_response_1_1", "pT_response_1_1", 100,-2,2);
-  book<TH1F>("pT_response_1_2", "pT_response_2_2", 100,-2,2);
+  book<TH1F>("pT_response_1", "p_{T,1,response,matched genjets}", 100,-2,2);
+  book<TH1F>("pT_response_2", "p_{T,2,response,matched genjets} ", 100,-2,2);
+  book<TH1F>("Mjj_Response", "M_{jj,response, matched genjets}", 100,-2,3);
+  
+    
+		auto K=yBins.size();
+		for (int j=0; j<=K-2; j++){
+		
+		float ymin=yBins[j];
+		float ymax=yBins[j+1];
+		
+		auto N=ptBins.size();
+		for(int i=0;i<= N-2;i++){
+			float ptMin=ptBins[i];
+			float ptMax=ptBins[i+1];
+			TString name = TString::Format("response_pt%.0fto%.0f_y%.2fto%.2f", ptMin, ptMax, ymin, ymax);
+			book<TH1F>(name, TString::Format("%.2f < p_{T} < %.2f GeV , %.2f < y < %.2f ;Response;", ptMin, ptMax, ymin, ymax), 100,-2,3); //name aendern
+		
+		}
+	
+	}
+		
+		
+  //~ book<TH1F>("Mjj_2_Response", "M_{jj,response,leading genjets}", 100,-2,3);
+  //~ book<TH1F>("pT_response_1_1", "p_{T,1,response,leading genjets}", 100,-2,2);
+  //~ book<TH1F>("pT_response_1_2", "p_{T,2,response,leading genjets}", 100,-2,2);
 
   
   //~ book<TH2D>("EMcharged_vs_eta_jet1","EMcharged vs #eta; #eta; EMcharged",100,-6,6,100,0.0,1.0);   
@@ -74,9 +93,9 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   book<TH1F>("N_pv", "N^{PV}", 100, 0, 100);
   
   is_mc = (ctx.get("dataset_type")=="MC");
-//std::cout << "A" << std::endl;
+	//~ std::cout << "Constructor fertig" << std::endl;
 }
-  
+
   
 
 void DijetAngularAnalysisHists::fill(const Event & event){
@@ -89,12 +108,15 @@ void DijetAngularAnalysisHists::fill(const Event & event){
   double weight = event.weight;
   
   std::vector<Jet>* jets = event.jets;
+
   int Njets = jets->size();
+
   hist("N_jets")->Fill(Njets, weight);
-  if(!event.isRealData)  hist("N_PU")->Fill(event.genInfo->pileup_TrueNumInteractions(), weight);
+
+  if(!event.isRealData)hist("N_PU")->Fill(event.genInfo->pileup_TrueNumInteractions(), weight);
+
   if(Njets>=1){
     hist("eta_jet1")->Fill(jets->at(0).eta(), weight);
-    hist("pt_jet1")->Fill(jets->at(0).pt(), weight);
     hist("EMcharged_jet1")->Fill(jets->at(0).chargedEmEnergyFraction(), weight);
     hist("EMneutral_jet1")->Fill(jets->at(0).neutralEmEnergyFraction(), weight);
     hist("HADcharged_jet1")->Fill(jets->at(0).chargedHadronEnergyFraction(), weight);
@@ -123,95 +145,150 @@ void DijetAngularAnalysisHists::fill(const Event & event){
     
     //~ float DR = 10^6;
 
- 
-if( is_mc ){
-	int a=-1;
-	if(event.genjets->size() > 0  && event.jets->size() >0){	
-		auto kleinsterAbstand = 100000; 
-	   auto jet1 = event.jets->at(0);
-	 auto gjet1 = event.genjets->at(0);
 
-		for(unsigned  int i=0; i < event.genjets->size(); i++){
-			if( deltaR( jet1, event.genjets->at(i)) < kleinsterAbstand){
-			kleinsterAbstand = deltaR( jet1, event.genjets ->at(i));	
-			a = i;
-			}
+	if( is_mc ){
+		int a=-1;
+		if(event.genjets->size() > 0  && event.jets->size() >0){	
+			auto kleinsterAbstand = 100000; 
+			auto jet1 = event.jets->at(0);
+			auto gjet1 = event.genjets->at(0);
 
-	
-		}
-		hist("pT_response_1") -> Fill( (jet1.pt()-event.genjets->at(a).pt())/event.genjets->at(a).pt(), weight);
-	hist("pT_response_1_1") -> Fill((jet1.pt()- gjet1.pt())/gjet1.pt(), weight);
+			for(unsigned  int i=0; i < event.genjets->size(); i++){
+				if( deltaR( jet1, event.genjets->at(i)) < kleinsterAbstand && deltaR( jet1, event.genjets->at(i)) < 0.2){
+				kleinsterAbstand = deltaR( jet1, event.genjets ->at(i));	
+				a = i;
+				}
 
-	}
-	
-
-if(event.genjets->size() > 1 && event.jets->size() >1){
-	
-	auto jet2 = event.jets->at(1);
-	//std::cout << "B" << std::endl;
-	auto jet1 = event.jets->at(0);
-	auto gjet2 = event.genjets->at(1);
-	auto gjet1 = event.genjets->at(0);
-	auto zweitkleinsterAbstand = 100000;
-	int b=-1;
-		
-	for( unsigned int i=0; i < event.genjets->size(); i++){
-		if( deltaR( jet2, event.genjets->at(i)) < zweitkleinsterAbstand){
-			zweitkleinsterAbstand = deltaR( jet2, event.genjets ->at(i));	
-			b = i;
-		}
 		
 			}
-		hist("pT_response_2") -> Fill( (jet2.pt()-event.genjets->at(b).pt())/event.genjets->at(b).pt(), weight);
+			if(a >= 0){
+				hist("pT_response_1") -> Fill( (jet1.pt()-event.genjets->at(a).pt())/event.genjets->at(a).pt(), weight);			// matched genjet
+			
+			auto K=yBins.size();
+			for (int j=0; j<K-2; j++){
 		
-		auto genjet = event.genjets->at(a).v4()+event.genjets->at(b).v4();
+				float ymin=yBins[j];
+				float ymax=yBins[j+1];
+				float rap1=0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz()));
+			if(ymin < fabs(rap1) && fabs(rap1) < ymax){
+				auto N=ptBins.size();
+				for(int i=0;i<= N-2;i++){
+					float ptMin=ptBins[i];
+					float ptMax=ptBins[i+1];
+					
+				
+					if(ptMin<jet1.pt() && jet1.pt()<ptMax){
+						TString name = TString::Format("response_pt%.0fto%.0f_y%.2fto%.2f", ptMin, ptMax, ymin, ymax);	
+						hist(name)-> Fill((jet1.pt()-event.genjets->at(a).pt())/event.genjets->at(a).pt(), weight);
+					}
+				}
+			}
+		}
+		//~ hist("pT_response_1_1") -> Fill((jet1.pt()- gjet1.pt())/gjet1.pt(), weight);										// leading genjet	
+			}
+	if(event.genjets->size() > 1 && event.jets->size() >1){												
+		//std::cout << "B" << std::endl;
+		
+		auto jet1 = event.jets->at(0);
+		auto jet2 = event.jets->at(1);
+		auto gjet1 = event.genjets->at(0);
+		auto gjet2 = event.genjets->at(1);
+		auto zweitkleinsterAbstand = 100000;
+		int b=-1;
 		auto recojet = jet1.v4() + jet2.v4();
+		//~ auto leadinggenjet = event.genjets->at(0).v4() + event.genjets->at(1).v4();
 		
-		hist("Mjj_Response") -> Fill( ((recojet).M()- (genjet).M())/(genjet).M(), weight);					//HIER IST IRGENDWAS FALSCH!!!!!!!!!!!!!!!!!!!
-		
-		//hist("Mjj") -> Fill( (jet1.v4().M()- event.genjets->at(a).v4().M())/event.genjets->at(a).v4().M(), weight);
-		hist("pT_response_1_2") -> Fill((jet2.pt()- gjet2.pt())/gjet2.pt(), weight);
-	hist("Mjj_2_Response") -> Fill(((jet1.v4() + jet2.v4()).M()- ((gjet1.v4()+gjet2.v4()).M()))/((gjet1.v4()+gjet2.v4()).M()), weight);
-	}
-
+		for( unsigned int i=0; i < event.genjets->size(); i++){
+			if( deltaR( jet2, event.genjets->at(i)) < zweitkleinsterAbstand && deltaR( jet2, event.genjets->at(i)) < 0.2 ){					// 0.2 bc half of 0.4 (AK4)
+				zweitkleinsterAbstand = deltaR( jet2, event.genjets ->at(i));	
+				b = i;
+			}
+			
+			
+		}
+		if(a >= 0 && b >= 0){		
+			auto matchedgenjet = event.genjets->at(a).v4()+event.genjets->at(b).v4();
 	
-  }
+			hist("pT_response_2") -> Fill( (jet2.pt()-event.genjets->at(b).pt())/event.genjets->at(b).pt(), weight);		// matched genjets
+			
 
-  
+			
+			hist("Mjj_Response") -> Fill( ((recojet).M()- (matchedgenjet).M())/(matchedgenjet).M(), weight);				// matched genjets
+			
+			
+			auto K=yBins.size();
+			for (int j=0; j<K-2; j++){
+
+				float ymin=yBins[j];
+				float ymax=yBins[j+1];
+				float rap2=0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
+			if(ymin < rap2 && rap2 < ymax){
+				auto N=ptBins.size();
+				for(int i=0;i<= N-2;i++){
+					float ptMin=ptBins[i];
+					float ptMax=ptBins[i+1];
+					
+
+					if(ptMin<jet2.pt() && jet2.pt()<ptMax){
+						TString name = TString::Format("response_pt%.0fto%.0f_y%.2fto%.2f", ptMin, ptMax, ymin, ymax);	
+						hist(name)-> Fill((jet2.pt()-event.genjets->at(b).pt())/event.genjets->at(b).pt(), weight);
+					}
+				}
+			}
+			}
+			
+			//~ 
+	//~ auto pt= event.jets->at().pt();
+	//~ auto y= 0.5*TMath::Log((event.jets->at().energy()+event.jets->at().v4().Pz())/(event.jets->at().energy()-event.jets->at().v4().Pz()))
+	//~ for(0.5<y<1){
+		//~ if(400<pt<500){
+		//~ hist(response1-> Fill(event.jets->at()-event.genjets->at().pt())/event.genjets->at().pt(), weight);
+		//~ 
+	//~ }
+	//~ hist("pT_response_1_2") -> Fill((jet2.pt()- gjet2.pt())/gjet2.pt(), weight);									// leading genjets
+	//~ hist("Mjj_2_Response") -> Fill(((recojet).M()- ((leadinggenjet).M()))/((leadinggenjet).M()), weight);			// leading genjets
+		}
+	
+	}
+	}
+	} // end if mc
+ 
     if(Njets>=2){
-	hist("rapidity_2")->Fill(0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz())), weight);
-	auto rapidity1 = 0.5*TMath::Log( (event.jets->at(0).energy()+event.jets->at(0).v4().Pz()) / (event.jets->at(0).energy()-event.jets->at(0).v4().Pz()) );
-	auto rapidity2 = 0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
-	
-	auto chi = TMath::Exp(abs((rapidity1)-(rapidity2)));
-	
-	auto jet1 = event.jets->at(0);
-	auto jet2 = event.jets->at(1);
-	
-    hist("rapidity_12")->Fill(0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz())), weight);
-    hist("rapidity_12")->Fill(0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz())), weight);
-
-	hist("pT2")->Fill(event.jets->at(1).pt(), weight);
-	hist("mj1j2")->Fill((event.jets->at(0).v4()+event.jets->at(1).v4()).M(), weight); 
-	hist("chi")->Fill(TMath::Exp(abs((rapidity1)-(rapidity2))),weight);
-	hist("yboost")->Fill(0.5*((rapidity1)+(rapidity2)), weight);
-	hist("teta*")->Fill((TMath::ACos(((chi-1))/(1+chi))), weight);
-	hist("deltaphi")->Fill(jet1.phi() - jet2.phi(), weight);
+		hist("rapidity_2")->Fill(0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz())), weight);
+		auto rapidity1 = 0.5*TMath::Log( (event.jets->at(0).energy()+event.jets->at(0).v4().Pz()) / (event.jets->at(0).energy()-event.jets->at(0).v4().Pz()) );
+		auto rapidity2 = 0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
+		auto chi = TMath::Exp(abs((rapidity1)-(rapidity2)));
+		auto jet1 = event.jets->at(0);
+		auto jet2 = event.jets->at(1);
+		
+		hist("rapidity_12")->Fill(0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz())), weight);
+		hist("rapidity_12")->Fill(0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz())), weight);
+		hist("pT2")->Fill(event.jets->at(1).pt(), weight);
+		hist("mj1j2")->Fill((event.jets->at(0).v4()+event.jets->at(1).v4()).M(), weight); 
+		hist("chi")->Fill(TMath::Exp(abs((rapidity1)-(rapidity2))),weight);
+		hist("yboost")->Fill(0.5*((rapidity1)+(rapidity2)), weight);
+		hist("teta*")->Fill((TMath::ACos(((chi-1))/(1+chi))), weight);
+		hist("deltaphi")->Fill(jet1.phi() - jet2.phi(), weight);
 	}
 	
-  if(Njets>=2){
-    hist("eta_jet2")->Fill(jets->at(1).eta(), weight);
-  }
-  if(Njets>=3){
-    hist("eta_jet3")->Fill(jets->at(2).eta(), weight);
-  }
-  if(Njets>=4){
-    hist("eta_jet4")->Fill(jets->at(3).eta(), weight);
-  }
+	 if(Njets>=2){
+	   hist("eta_jet2")->Fill(jets->at(1).eta(), weight);
+	 }
+	 if(Njets>=3){
+	   hist("eta_jet3")->Fill(jets->at(2).eta(), weight);
+	 }
+	 if(Njets>=4){
+	   hist("eta_jet4")->Fill(jets->at(3).eta(), weight);
+	 }
 
-  if(Njets>=5){
-    hist("PETA")->Fill(jets->at(4).eta(), weight);
-  }
+	 if(Njets>=5){
+	   hist("PETA")->Fill(jets->at(4).eta(), weight);
+	}
+	
+
+	
+
+		
   
   //~ int Nmuons = event.muons->size();
   //~ hist("N_mu")->Fill(Nmuons, weight);
@@ -223,6 +300,7 @@ if(event.genjets->size() > 1 && event.jets->size() >1){
   
   int Npvs = event.pvs->size();
   hist("N_pv")->Fill(Npvs, weight);
+
 }
 
 DijetAngularAnalysisHists::~DijetAngularAnalysisHists(){}

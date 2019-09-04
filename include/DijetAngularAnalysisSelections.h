@@ -41,7 +41,7 @@ private:
 
 class pT_sel: public uhh2::Selection {
 public:
-    pT_sel(float pt_min=200);
+    pT_sel(float pt_min=200);														// not 550
     virtual bool passes(const uhh2::Event & event) override;
 private:
     float  pt_min;
@@ -62,6 +62,15 @@ public:
 private:
     float yboost_min;
 };
+
+class mjj_sel: public uhh2::Selection {
+public:
+    mjj_sel(float mjj_min = 2400);
+    virtual bool passes(const uhh2::Event & event) override;
+private:
+    float mjj_min;
+};
+
 
 
 

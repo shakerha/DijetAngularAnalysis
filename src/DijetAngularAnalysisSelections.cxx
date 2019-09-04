@@ -82,7 +82,7 @@ bool chi_sel::passes(const Event & event){
 	const auto & rapi0 = 0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz()));
 	const auto & rapi1 = 0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
 	auto chi_ = TMath::Exp(fabs((rapi0)-(rapi1)));
-	if((chi_ < chi_min) || (chi_ > chi_max)) return false;
+	if((chi_ < chi_min) || (chi_ > chi_max)) return false;  // (chi_ >= chi_max) ?
 	return true;
 }
 
@@ -95,7 +95,17 @@ bool yboost_sel::passes(const Event & event){
 	const auto & rapi0 = 0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz()));
 	const auto & rapi1 = 0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
 	auto yboost_ = 0.5*((rapi0)+(rapi1)); 
-	if(fabs(yboost_) > fabs(yboost_min)) return false;
+	if(fabs(yboost_) > fabs(yboost_min)) return false;		//fabs(yboost_) >= fabs(yboost_min)?
+	return true;
+}
+
+mjj_sel::mjj_sel(float mjjmin): mjj_min(mjjmin){}
+
+bool mjj_sel::passes(const Event & event){
+	assert(event.jets);
+	if(event.jets->size() < 2) return false;
+	auto mjj = (event.jets->at(0).v4()+event.jets->at(1).v4()).M();
+	if(fabs(mjj) < fabs(mjj_min)) return false;		
 	return true;
 }
 
