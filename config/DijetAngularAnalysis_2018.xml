@@ -19,6 +19,7 @@ MC2
 <!ENTITY MC_QCD_Pt_470to600 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_470to600_TuneCP5_13TeV_pythia8.xml">
 <!ENTITY MC_QCD_Pt_600to800 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_600to800_TuneCP5_13TeV_pythia8.xml">
 <!ENTITY MC_QCD_Pt_800to1000 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_800to1000_TuneCP5_13TeV_pythia8.xml">
+<!ENTITY MC_QCD_Pt_1000to1400 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8.xml">
 <!ENTITY MC_QCD_Pt_1400to1800 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8.xml">
 <!ENTITY MC_QCD_Pt_1800to2400 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8.xml">
 <!ENTITY MC_QCD_Pt_2400to3200 SYSTEM "/nfs/dust/cms/user/shakerha/bachelor/102/CMSSW_10_2_10/src/UHH2/common/datasets/RunII_102X_v1/2018/MC_QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8.xml">
@@ -80,7 +81,7 @@ MC2
 				</InputData>
 -->
 				
-								<InputData Lumi="286.4995178" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_15to30_2018" Cacheable="False">
+								<InputData Lumi="286.4995178" NEventsMax="-1" Type="MC" Version="MC_QCD_Pt_170to300_2018" Cacheable="False">
 					&MC_QCD_Pt_170to300;
 					<InputTree Name="AnalysisTree"/>
 				</InputData>
@@ -141,17 +142,17 @@ MC2
 		 	<InputTree Name="AnalysisTree"/> 
 		 </InputData> 
 		 
-		 <InputData Version="DATA_JetHT_2018B" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 <InputData Version="DATA_JetHTRun_2018B" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
 			&DATA_JetHTRun2018B;
 		 	<InputTree Name="AnalysisTree"/> 
 		 </InputData> 
 		 
-		 <InputData Version="DATA_JetHT_2018C" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 <InputData Version="DATA_JetHTRun_2018C" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
 			&DATA_JetHTRun2018C;
 		 	<InputTree Name="AnalysisTree"/> 
 		 </InputData> 
 		 
-		 <InputData Version="DATA_JetHT_2018D" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
+		 <InputData Version="DATA_JetHTRun_2018D" Lumi="1" Type="DATA" NEventsMax="-1" Cacheable="False"> 
 			&DATA_JetHTRun2018D;
 		 	<InputTree Name="AnalysisTree"/> 
 		 </InputData> 
@@ -188,7 +189,7 @@ MC2
 			&MC_QCD_FLAT;
 			<InputTree Name="AnalysisTree"/>
 		</InputData>
-
+-->
 
 
         <UserConfig>
@@ -198,6 +199,7 @@ MC2
             <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
             <Item Name="JetCollection" Value="jetsAk4Puppi" />
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
+            <Item Name="GenParticleCollection" Value="GenParticles" />
             <Item Name="METName" Value="slimmedMETsPuppi" />
 
             <!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
@@ -237,7 +239,7 @@ MC2
             <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
             <Item Name="pileup_directory" Value="common/data/2018/MyMCPileupHistogram.root" />
             <Item Name="pileup_directory_data" Value="common/data/2018/MyDataPileupHistogram2018.root" />
-			<Item Name="lumi_file" Value="Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.root" />
+			<Item Name="lumi_file" Value="common/data/2018/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.root" />
             <!-- Some test configuration; see DijetAngularAnalysisModule.cxx for how to access it: -->
             <Item Name="TestKey" Value="TestKeyValue" />
         </UserConfig>
