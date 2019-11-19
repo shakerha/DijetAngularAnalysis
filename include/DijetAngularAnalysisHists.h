@@ -1,9 +1,8 @@
 #pragma once
 
 #include "UHH2/core/include/Hists.h"
-//~ std::vector<float> ptBins_={0,400,500,600,800,1000,1200,1400,1700,2000,2500,3000,3500,4000,4500};     
-std::vector<float> ptBins_={0,400,500,600,800,1000,1200,1400,1700,2000,2500,3000,3500};     
-std::vector<float> yBins_={0.5,1,1.5,1.8,2.1,2.5};
+#include "UHH2/DijetAngularAnalysis/include/DijetAngularAnalysisCommon.h"
+
 
 namespace uhh2examples {
 
@@ -24,10 +23,10 @@ public:
     
 	bool is_mc;
 	
-	std::vector<float> ptBins=ptBins_;     
+	const std::vector<float> ptBins = DijetVars::ptBins_;     
 	
-	std::vector<float> yBins=yBins_;
-};
+	const std::vector<float> yBins=DijetVars::yBins_;
 
+};
 
 }

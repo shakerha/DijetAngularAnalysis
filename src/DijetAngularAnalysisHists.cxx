@@ -17,29 +17,29 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   
   book<TH1F>("N_jets", "N_{jets}", 20, 0, 20);  
   book<TH1F>("N_PU", "N_{PU}", 100, 0, 100);  
-  book<TH1F>("eta_jet1", "#eta^{jet 1}", 40, -2.5, 2.5);
-  book<TH1F>("eta_jet2", "#eta^{jet 2}", 40, -2.5, 2.5);
-  book<TH1F>("eta_jet3", "#eta^{jet 3}", 40, -2.5, 2.5);
-  book<TH1F>("eta_jet4", "#eta^{jet 4}", 40, -2.5, 2.5);
-  book<TH1F>("PETA", "#eta^{jet 5}", 40, -2.5, 2.5);
+  book<TH1F>("eta_jet1", "#eta_{1}", 40, -2.5, 2.5);
+  book<TH1F>("eta_jet2", "#eta_{2}", 40, -2.5, 2.5);
+  book<TH1F>("eta_jet3", "#eta_{3}", 40, -2.5, 2.5);
+  book<TH1F>("eta_jet4", "#eta_{4}", 40, -2.5, 2.5);
+  book<TH1F>("PETA", "#eta_{5}", 40, -2.5, 2.5);
 
   book<TH1F>("EMcharged_jet1", "EMcharged_jet1", 100,0.0,1.0);
   book<TH1F>("EMneutral_jet1", "EMneutral_jet1", 100,0.0,1.0);
   book<TH1F>("HADcharged_jet1", "HADcharged_jet1", 100,0.0,1.0);
   book<TH1F>("HADneutral_jet1", "HADneutral_jet1", 100,0.0,1.0);
   
-  book<TH1F>("rapidity_1", "rapidity1", 100,-5,5);
-  book<TH1F>("rapidity_2", "rapidity2", 100,-5,5);
-  book<TH1F>("rapidity_12", "rapidity12", 100,-5,5);
+  book<TH1F>("rapidity_1", "y_{1}", 100,-5,5);
+  book<TH1F>("rapidity_2", "y_{2}", 100,-5,5);
+  book<TH1F>("rapidity_12", "y_{12}", 100,-5,5);
   
-  book<TH1F>("pT1", "p_{T,1}", 100,200,5000);
-  book<TH1F>("pT2", "p_{T,2}", 100,200,5000);
+  book<TH1F>("pT1", "p_{T,1} [GeV]", 100,200,5000);
+  book<TH1F>("pT2", "p_{T,2} [GeV]", 100,200,5000);
   
-  book<TH1F>("mj1j2", "M_{jj}", 100,0,6000);
+  book<TH1F>("mj1j2", "M_{jj} [GeV]", 100,0,8000);
   
   book<TH1F>("chi", "#chi", 20,0,20);
   
-  book<TH1F>("yboost", "yboost", 100,-5,5);
+  book<TH1F>("yboost", "y_{boost} [GeV]", 100,-5,5);
   
   book<TH1F>("teta*", "#teta^{*}", 100,0,pihalb);
   
@@ -51,43 +51,24 @@ DijetAngularAnalysisHists::DijetAngularAnalysisHists(Context & ctx, const string
   
     
 		auto K=yBins.size();
-		for (int j=0; j<=K-2; j++){
+		for (uint j=0; j<=K-2; j++){
 		
-		float ymin=yBins[j];
-		float ymax=yBins[j+1];
+		float ymin=DijetVars::yBins_[j];
+		float ymax=DijetVars::yBins_[j+1];
 		
 		auto N=ptBins.size();
-		for(int i=0;i<= N-2;i++){
-			float ptMin=ptBins[i];
-			float ptMax=ptBins[i+1];
+		for(uint i=0;i<= N-2;i++){
+			float ptMin=DijetVars::ptBins_[i];
+			float ptMax=DijetVars::ptBins_[i+1];
 			TString name = TString::Format("response_pt%.0fto%.0f_y%.2fto%.2f", ptMin, ptMax, ymin, ymax);
 			book<TH1F>(name, TString::Format("%.2f < p_{T} < %.2f GeV , %.2f < y < %.2f ;Response;", ptMin, ptMax, ymin, ymax), 100,-2,3); //name aendern
+			// cout << "Adding hist " << name << endl;
 		
 		}
 	
 	}
 		
-		
-  //~ book<TH1F>("Mjj_2_Response", "M_{jj,response,leading genjets}", 100,-2,3);
-  //~ book<TH1F>("pT_response_1_1", "p_{T,1,response,leading genjets}", 100,-2,2);
-  //~ book<TH1F>("pT_response_1_2", "p_{T,2,response,leading genjets}", 100,-2,2);
 
-  
-  //~ book<TH2D>("EMcharged_vs_eta_jet1","EMcharged vs #eta; #eta; EMcharged",100,-6,6,100,0.0,1.0);   
-  //~ book<TH2D>("EMneutral_vs_eta_jet1","EMneutral vs #eta; #eta; EMneutral",100,-6,6,100,0.0,1.0);   
-  //~ book<TH2D>("HADcharged_vs_eta_jet1","HADcharged vs #eta; #eta; HADcharged",100,-6,6,100,0.0,1.0);   
-  //~ book<TH2D>("HADneutral_vs_eta_jet1","HADneutral vs #eta; #eta; HADneutral",100,-6,6,100,0.0,1.0);   
-  //~ book<TH2D>("EMcharged_vs_PU_jet1","EMcharged vs PU; PU; EMcharged",100,0,100,100,0.0,1.0);   
-  //~ book<TH2D>("EMneutral_vs_PU_jet1","EMneutral vs PU; PU; EMneutral",100,0,100,100,0.0,1.0);   
-  //~ book<TH2D>("HADcharged_vs_PU_jet1","HADcharged vs PU; PU; HADcharged",100,0,100,100,0.0,1.0);   
-  //~ book<TH2D>("HADneutral_vs_PU_jet1","HADneutral vs PU; PU; HADneutral",100,0,100,100,0.0,1.0);   
-
-
-  // leptons
-  //~ book<TH1F>("N_mu", "N^{#mu}", 10, 0, 10);
-  //~ book<TH1F>("pt_mu", "p_{T}^{#mu} [GeV/c]", 40, 0, 200);
-  //~ book<TH1F>("eta_mu", "#eta^{#mu}", 40, -2.1, 2.1);
-  //~ book<TH1F>("reliso_mu", "#mu rel. Iso", 40, 0, 0.5);
 
   // primary vertices
   book<TH1F>("N_pv", "N^{PV}", 100, 0, 100);
@@ -165,14 +146,14 @@ void DijetAngularAnalysisHists::fill(const Event & event){
 				hist("pT_response_1") -> Fill( (jet1.pt()-event.genjets->at(a).pt())/event.genjets->at(a).pt(), weight);			// matched genjet
 			
 			auto K=yBins.size();
-			for (int j=0; j<K-2; j++){
+			for (uint j=0; j<=K-2; j++){
 		
 				float ymin=yBins[j];
 				float ymax=yBins[j+1];
 				float rap1=0.5*TMath::Log((event.jets->at(0).energy()+event.jets->at(0).v4().Pz())/(event.jets->at(0).energy()-event.jets->at(0).v4().Pz()));
 			if(ymin < fabs(rap1) && fabs(rap1) < ymax){
 				auto N=ptBins.size();
-				for(int i=0;i<= N-2;i++){
+				for(uint i=0;i<= N-2;i++){
 					float ptMin=ptBins[i];
 					float ptMax=ptBins[i+1];
 					
@@ -217,14 +198,14 @@ void DijetAngularAnalysisHists::fill(const Event & event){
 			
 			
 			auto K=yBins.size();
-			for (int j=0; j<K-2; j++){
+			for (uint j=0; j<=K-2; j++){
 
 				float ymin=yBins[j];
 				float ymax=yBins[j+1];
 				float rap2=0.5*TMath::Log((event.jets->at(1).energy()+event.jets->at(1).v4().Pz())/(event.jets->at(1).energy()-event.jets->at(1).v4().Pz()));
 			if(ymin < rap2 && rap2 < ymax){
 				auto N=ptBins.size();
-				for(int i=0;i<= N-2;i++){
+				for(uint i=0;i<= N-2;i++){
 					float ptMin=ptBins[i];
 					float ptMax=ptBins[i+1];
 					
